@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Scan this library's own components so their utility classes are always
+   generated, even when the consuming app's Tailwind entry does not include
+   the library in its own source detection. */
+@source "../";

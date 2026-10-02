@@ -1,0 +1,7 @@
+minimumReleaseAgeExclude:
+  - '@nuxt/test-utils@4.3.3'
+  - '@vue/language-core@3.3.12'
+  - vue-tsc@3.3.12
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true

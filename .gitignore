@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.output/
+.data/
+
+# Nuxt
+.nuxt/
+.nitro/
+.cache/
+
+# Test coverage
+coverage/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor/OS
+.DS_Store
+.idea/
+*.swp
