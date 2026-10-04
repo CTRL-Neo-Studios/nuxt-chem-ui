@@ -172,6 +172,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.2(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+      kekule:
+        specifier: ^1.0.4
+        version: 1.0.4
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -3138,6 +3141,10 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  kekule@1.0.4:
+    resolution: {integrity: sha512-VyU2vz0T9oMRPoGMSverG3V4rYBTvZOgyTa5Sb/0ik7IrpmGaiEIQAib8VQznf1e9gDM3TWfW27hi1CJvGztwg==}
+    engines: {node: '>=0.10'}
 
   keyv@5.6.0:
     resolution: {integrity: sha512-CYDD3SOtsHtyXeEORYRx2qBtpDJFjRTGXUtmNEMGyzYOKj1TE3tycdlho7kA1Ufx9OYWZzg52QFBGALTirzDSw==}
@@ -8249,6 +8256,8 @@ snapshots:
   json-stable-stringify-without-jsonify@1.0.1: {}
 
   json5@2.2.3: {}
+
+  kekule@1.0.4: {}
 
   keyv@5.6.0:
     dependencies:

@@ -166,16 +166,25 @@ mirror upstream, matching Kekule-Vue's component name).
 
 ## Upstream gotchas reference
 
+- **Widget constructors take the target document**: `new Kekule.ChemWidget.PeriodicTable(el.ownerDocument)`
+  — without it the widget never creates its root element and `appendToElem` dies with
+  `appendChild: parameter 1 is not of type 'Node'` (discovered live in Project 1; the composable's
+  `create(Kekule, container)` factory passes the container for this). Applies to Viewer/Composer too.
 - Import `'kekule'` (or `'kekule/mod/chemWidget'`); there is **no** `'kekule/mod/chemEditor'` —
   `Kekule.Editor.Composer` lives in the `chemWidget` module. The plain `'kekule'` entry is
   simplest.
+- `kekule` ships no TS declarations — `src/runtime/utils/kekule/kekule-module.d.ts` shims
+  `'kekule'` / `'kekule/theme'` so the dynamic import typechecks.
 - Kekule dist chunks are plain side-effect scripts sharing a `globalThis.Kekule` free variable —
   import order matters (handled by their ESM shims), tree-shaking is impossible, and import time
   is SSR-safe; only widget *instantiation* needs a DOM (hence `.client.vue`).
 - Avoid the CJS entry under bundlers (bare `__filename` → `Invalid URL`, issue #308).
-- Kekule display-type props are numeric enums, not strings — hence `displayType.ts`.
+- Kekule display-type props are numeric enums, not strings — hence `displayType.ts` (Project 2).
 - PeriodicTable multi-select prop is `enableMultiSelect`; events `select`/`deselect` carry a
-  single `{ elemData }` field.
+  single `{ elemData }` field. Programmatic selection (`selectedSymbols` prop /
+  `selectSymbols()`) fires those same events synchronously — the composable's re-entrancy guard
+  (flag up during apply, cleared on `nextTick`) suppresses the echo; guarded handlers skip both
+  the model write-back and the re-emit. Verified live plus in tests.
 - Viewer `predefinedSetting` presets: `basic` (save/display-type/zoom toolbar), `fullFunc`
   (toolbar + editing), `mini` (menu button), `static` (no toolbar/interaction).
 - Composer events of interest: `userModificationDone` (no params), `load` `{ obj }`,
