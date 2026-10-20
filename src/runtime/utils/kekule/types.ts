@@ -49,10 +49,39 @@ export interface KekulePeriodicTableWidget extends KekuleWidget {
   selectSymbols(symbols: string[]): void
 }
 
+/** `load` event payload of `Editor.Composer`. */
+export interface KekuleComposerLoadEventParam extends KekuleEventParam {
+  obj: unknown
+}
+
+/** `Kekule.Editor.Composer`. */
+export interface KekuleComposerWidget extends KekuleWidget {
+  /** The ChemDocument root shown in the editor. */
+  getChemObj(): unknown
+  /**
+   * The object to save/export — this is the model value of
+   * `ChemKekuleComposer` (unlike `getChemObj`, which returns the document
+   * root rather than the save target).
+   */
+  getSavingTargetObj(): unknown
+  /**
+   * Replace editor content from serialized data (fires `load`). Upstream
+   * argument order is `(data, dataType, mimeType, formatId, coordMode)` —
+   * the format id ("mol", "cml", …) is the **fourth** argument, so the
+   * format alone must be passed as `(data, undefined, undefined, format)`.
+   */
+  loadFromData(data: string, dataType?: unknown, mimeType?: unknown, formatId?: string, coordMode?: unknown): unknown
+}
+
+/** Structural subset of `Kekule.IO` used for serialization. */
+export interface KekuleIONamespace {
+  saveFormatData(obj: unknown, formatId: string, options?: unknown): string
+}
+
 /**
  * Structural subset of the global `Kekule` namespace. Only the members this
- * library uses are declared; `Editor` / `IO` / `Render` stay loose
- * placeholders for the upcoming Viewer/Composer components.
+ * library uses are declared; `Render` stays a loose placeholder for the
+ * upcoming Viewer component.
  */
 export interface KekuleNamespace {
   ChemWidget: {
@@ -63,7 +92,9 @@ export interface KekuleNamespace {
      */
     PeriodicTable: new (doc: Document) => KekulePeriodicTableWidget
   }
-  Editor?: Record<string, unknown>
-  IO?: Record<string, unknown>
+  Editor: {
+    Composer: new (doc: Document) => KekuleComposerWidget
+  }
+  IO?: KekuleIONamespace
   Render?: Record<string, unknown>
 }

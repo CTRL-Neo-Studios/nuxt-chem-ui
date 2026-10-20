@@ -190,4 +190,17 @@ mirror upstream, matching Kekule-Vue's component name).
 - Composer events of interest: `userModificationDone` (no params), `load` `{ obj }`,
   `editObjsUpdated`; `getChemObj()` returns the ChemDocument root — use `getSavingTargetObj()`
   for the model value.
+- **`loadFromData` argument order** (discovered live in Project 3): upstream signature is
+  `(data, dataType, mimeType, formatId, coordMode)` — the format id is the **4th** argument.
+  Passing it 2nd "works" (the `load` event even fires with a parsed obj) but the editor document
+  stays empty: `getSavingTargetObj()` and `exportData()` come back empty. The wrapper's
+  `loadData(data, format)` must call `loadFromData(data, undefined, undefined, format)`.
+- Composer `enableOperHistory` upstream default is `true`
+  (`Kekule.globalOptions` → `chemWidget.editor.enableOperHistory`). Vue casts an absent Boolean
+  prop to `false`, so the wrapper's prop carries an explicit `@default true` instead of deferring
+  to the engine default.
+- Switching `predefinedSetting` **live** (after mount) does rebuild the toolbar, but the exact
+  button inventory can differ from a fresh mount at the same preset (Kekule merges some prior
+  toolbar state). Verified live in Project 3: prop value round-trips correctly either way;
+  prefer setting the preset at mount when the exact toolbar matters.
 - Teardown: always `widget.finalize()` on unmount (the composable does this).

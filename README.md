@@ -7,6 +7,9 @@ Chemistry-focused UI components for [Nuxt](https://nuxt.com) — molecule and fo
 Early development. Current components:
 
 - `<ChemMolecularFormula>` — renders molecular formula strings (`CuSO4·5H2O`) with proper subscripts.
+- `<ChemKekulePeriodicTable>` — interactive periodic table with two-way element selection (Kekule.js engine, lazy-loaded client-side).
+- `<ChemKekuleComposer>` — 2D molecule structure editor with MOL/CML export (Kekule.js engine, lazy-loaded client-side).
+- `useChemKekuleWidget()` — composable underpinning the Kekule wrappers (widget lifecycle, prop sync, event bridging).
 
 ## Usage
 

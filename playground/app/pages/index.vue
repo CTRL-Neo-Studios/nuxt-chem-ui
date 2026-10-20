@@ -26,7 +26,7 @@ const input = ref('C8H10N4O2')
       <span>
         <span class="font-medium">Kekule components</span>
         <span class="mt-0.5 block text-sm text-gray-600 dark:text-gray-400">
-          Periodic table powered by the Kekule.js engine — viewer and composer coming.
+          Periodic table and structure editor powered by the Kekule.js engine — viewer coming.
         </span>
       </span>
       <span aria-hidden="true" class="text-gray-400">→</span>
