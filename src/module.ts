@@ -52,8 +52,11 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
 
     // Register the Tailwind CSS v4 Vite plugin unless the app already has it,
     // so consuming apps get Tailwind without any setup of their own.
-    nuxt.hook('vite:extendConfig', (config) => {
-      const writable = config as { plugins?: Array<unknown> }
+    nuxt.hook('vite:extendConfig', (config, { isClient }) => {
+      const writable = config as {
+        plugins?: Array<unknown>
+        optimizeDeps?: { include?: Array<string> }
+      }
       const plugins = (writable.plugins ||= [])
       const hasTailwind = plugins.flat(Infinity).some(plugin =>
         typeof plugin === 'object'
@@ -62,6 +65,18 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
       )
       if (!hasTailwind) {
         plugins.push(tailwindcss())
+      }
+
+      // Pre-bundle the kekule engine in dev so its large side-effect dist
+      // chunks are served as one optimized dependency instead of a chain of
+      // module requests. Client only — kekule is dynamically imported by
+      // client-only components and never loaded on the server.
+      if (isClient) {
+        const optimizeDeps = (writable.optimizeDeps ||= {})
+        const include = (optimizeDeps.include ||= [])
+        if (!include.includes('kekule')) {
+          include.push('kekule')
+        }
       }
     })
   },

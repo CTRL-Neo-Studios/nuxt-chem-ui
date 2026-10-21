@@ -19,6 +19,19 @@ const input = ref('C8H10N4O2')
       Development playground for the chemistry UI components.
     </p>
 
+    <NuxtLink
+      to="/kekule"
+      class="mt-6 flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:border-blue-400 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-blue-600"
+    >
+      <span>
+        <span class="font-medium">Kekule components</span>
+        <span class="mt-0.5 block text-sm text-gray-600 dark:text-gray-400">
+          Periodic table and structure editor powered by the Kekule.js engine — viewer coming.
+        </span>
+      </span>
+      <span aria-hidden="true" class="text-gray-400">→</span>
+    </NuxtLink>
+
     <section class="mt-10 rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <h2 class="text-lg font-semibold">
         ChemMolecularFormula
