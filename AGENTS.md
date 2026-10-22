@@ -20,7 +20,7 @@ Components come from two sources:
 
 | Command | What it does |
 | --- | --- |
-| `pnpm install` | Installs deps; the `prepare` script stub-builds `dist/` for local development |
+| `pnpm install` | Installs deps; the `prepare` script builds `dist/` (real build — the same output consumers get) |
 | `pnpm dev` | Runs the playground dev server (the main dev loop) |
 | `pnpm dev:prepare` | Stub build + prepare playground types (run after changing module setup or adding deps) |
 | `pnpm build` | Builds the module into `dist/` |
@@ -78,4 +78,12 @@ The playground is a consumer, not part of the library: `src/runtime/**` must nev
 
 ## Versioning / publishing
 
-`dist/` is build output (gitignored). Publishing isn't set up yet: when needed, remove `"private": true` in `package.json`, add a `release` script, and use the existing `build` output (`dist/module.mjs` / `.cjs` are already wired in `exports`).
+`dist/` is build output (gitignored). `prepare` runs a real `nuxt-module-build build`, so `pnpm pack` and git installs (`pnpm add github:AnsonZhang2009/nuxt-chem-ui`) always ship a real build. The `--stub` build is dev-only (`pnpm dev:prepare`) — a stub must never reach a tarball. Releases are prebuilt tarballs attached to GitHub Releases:
+
+```bash
+pnpm version patch        # or minor
+pnpm pack                 # → nuxt-chem-ui-X.Y.Z.tgz in the repo root
+gh release create vX.Y.Z nuxt-chem-ui-X.Y.Z.tgz
+```
+
+npm publishing isn't set up yet; when needed, remove `"private": true` in `package.json` and add a `release` script (`exports` already point at `dist/module.mjs` / `dist/module.d.mts`).

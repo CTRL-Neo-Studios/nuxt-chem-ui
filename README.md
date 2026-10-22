@@ -13,8 +13,22 @@ Early development. Current components:
 
 ## Usage
 
+Install from a [GitHub Release](https://github.com/AnsonZhang2009/nuxt-chem-ui/releases) tarball (prebuilt, no install scripts):
+
 ```bash
-pnpm add nuxt-chem-ui
+pnpm add https://github.com/AnsonZhang2009/nuxt-chem-ui/releases/download/v0.1.0/nuxt-chem-ui-0.1.0.tgz
+```
+
+or straight from GitHub (pnpm builds it on install — approve the build once):
+
+```bash
+pnpm add github:AnsonZhang2009/nuxt-chem-ui
+```
+
+```yaml
+# pnpm-workspace.yaml (pnpm 10.26+)
+allowBuilds:
+  'nuxt-chem-ui@git+https://github.com/AnsonZhang2009/nuxt-chem-ui.git': true
 ```
 
 ```ts
@@ -49,7 +63,7 @@ export default defineNuxtConfig({
 ## Development
 
 ```bash
-pnpm install        # also stub-builds dist/
+pnpm install        # also builds dist/ (real build via prepare)
 pnpm dev            # playground at http://localhost:3000
 pnpm test           # vitest
 pnpm lint           # eslint

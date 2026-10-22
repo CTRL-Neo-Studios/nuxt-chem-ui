@@ -28,7 +28,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxi typecheck playground",
-    "prepare": "nuxt-module-build build --stub"
+    "prepare": "nuxt-module-build build"
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",
